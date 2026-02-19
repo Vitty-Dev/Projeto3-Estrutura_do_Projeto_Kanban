@@ -1,18 +1,34 @@
 const modal = document.getElementById('task-modal');
 const input = document.getElementById('input-task');
+const sound = document.getElementById('success-sound');
 
 function openModal() { modal.style.display = 'grid'; input.focus(); }
 function closeModal() { modal.style.display = 'none'; input.value = ''; }
 
-function allowDrop(ev) { ev.preventDefault(); }
+// Função para enviar com Enter
+function handleEnter(event) {
+    if (event.key === 'Enter') {
+        createNewTask();
+    }
+}
 
+function allowDrop(ev) { ev.preventDefault(); }
 function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
 
 function drop(ev) {
     ev.preventDefault();
     const data = ev.dataTransfer.getData("text");
-    const dropzone = ev.target.closest('.kanban-column').querySelector('.task-zone');
+    const targetColumn = ev.target.closest('.kanban-column');
+    const dropzone = targetColumn.querySelector('.task-zone');
+    
     dropzone.appendChild(document.getElementById(data));
+    
+    // Tocar som se cair na coluna "Feito"
+    if (targetColumn.id === 'done') {
+        sound.currentTime = 0;
+        sound.play();
+    }
+    
     updateCounts();
 }
 
