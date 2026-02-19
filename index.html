@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Kanban | Vitty Dev</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+    <link rel="stylesheet" href="kanban-style.css">
+</head>
+<body>
+
+    <div class="kanban-container">
+        <header class="kanban-header">
+            <h1>Gestão Ágil <span>| Kanban</span></h1>
+            <div class="add-task">
+                <input type="text" id="task-input" placeholder="Nova tarefa...">
+                <button onclick="addTask()"><i class="fas fa-plus"></i></button>
+            </div>
+        </header>
+
+        <main class="kanban-board">
+            <div class="column" ondrop="drop(event)" ondragover="allowDrop(event)" id="todo">
+                <h3><i class="fas fa-list-ul"></i> A Fazer</h3>
+                <div class="task-list" id="todo-list"></div>
+            </div>
+
+            <div class="column" ondrop="drop(event)" ondragover="allowDrop(event)" id="doing">
+                <h3><i class="fas fa-spinner fa-spin"></i> Em Andamento</h3>
+                <div class="task-list" id="doing-list"></div>
+            </div>
+
+            <div class="column" ondrop="drop(event)" ondragover="allowDrop(event)" id="done">
+                <h3><i class="fas fa-check-double"></i> Concluído</h3>
+                <div class="task-list" id="done-list"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="kanban-script.js"></script>
+</body>
+</html>
