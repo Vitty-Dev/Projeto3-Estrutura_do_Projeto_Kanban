@@ -3,38 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Kanban | Vitty Dev</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Vitty Dev | Kanban Board</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
     <link rel="stylesheet" href="kanban-style.css">
 </head>
 <body>
 
-    <div class="kanban-container">
+    <div class="app-wrapper">
         <header class="kanban-header">
-            <h1>Gestão Ágil <span>| Kanban</span></h1>
-            <div class="add-task">
-                <input type="text" id="task-input" placeholder="Nova tarefa...">
-                <button onclick="addTask()"><i class="fas fa-plus"></i></button>
+            <div class="logo-area">
+                <h1>Gestão Ágil<span> | Kanban</span></h1>
+            </div>
+            <div class="actions">
+                <button class="btn-add" onclick="openModal()">
+                    <i class="fas fa-plus"></i> Nova Tarefa
+                </button>
             </div>
         </header>
 
-        <main class="kanban-board">
-            <div class="column" ondrop="drop(event)" ondragover="allowDrop(event)" id="todo">
-                <h3><i class="fas fa-list-ul"></i> A Fazer</h3>
-                <div class="task-list" id="todo-list"></div>
-            </div>
+        <main class="board">
+            <section class="column" id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="column-header">
+                    <span class="dot yellow"></span>
+                    <h3>A Fazer</h3>
+                    <span class="counter" id="todo-count">0</span>
+                </div>
+                <div class="tasks-container" id="todo-list"></div>
+            </section>
 
-            <div class="column" ondrop="drop(event)" ondragover="allowDrop(event)" id="doing">
-                <h3><i class="fas fa-spinner fa-spin"></i> Em Andamento</h3>
-                <div class="task-list" id="doing-list"></div>
-            </div>
+            <section class="column" id="doing" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="column-header">
+                    <span class="dot blue"></span>
+                    <h3>Fazendo</h3>
+                    <span class="counter" id="doing-count">0</span>
+                </div>
+                <div class="tasks-container" id="doing-list"></div>
+            </section>
 
-            <div class="column" ondrop="drop(event)" ondragover="allowDrop(event)" id="done">
-                <h3><i class="fas fa-check-double"></i> Concluído</h3>
-                <div class="task-list" id="done-list"></div>
-            </div>
+            <section class="column" id="done" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="column-header">
+                    <span class="dot green"></span>
+                    <h3>Feito</h3>
+                    <span class="counter" id="done-count">0</span>
+                </div>
+                <div class="tasks-container" id="done-list"></div>
+            </section>
         </main>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h3>Nova Tarefa</h3>
+            <input type="text" id="task-text" placeholder="O que precisa ser feito?">
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+                <button class="btn-save" onclick="addTask()">Criar Tarefa</button>
+            </div>
+        </div>
     </div>
 
     <script src="kanban-script.js"></script>
