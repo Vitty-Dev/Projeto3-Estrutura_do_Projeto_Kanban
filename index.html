@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vitty Dev | Kanban Ágil</title>
+    <title>Vitty Dev | Kanban Advanced</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,7 +14,12 @@
     <div class="app-container">
         <section class="intro">
             <h1>Gestão Ágil<span> | Kanban</span></h1>
-            <p>Otimize seu fluxo de trabalho visualizando o progresso das suas tarefas em tempo real. Utilize o método <strong>Kanban</strong> para evitar sobrecarga e focar no que realmente importa.</p>
+            <p>Monitore sua produtividade com métricas em tempo real e organização temporal das tarefas.</p>
+            
+            <div class="chart-container">
+                <canvas id="taskChart"></canvas>
+            </div>
+
             <button class="btn-main" onclick="openModal()">
                 <i class="fas fa-plus"></i> Nova Tarefa
             </button>
@@ -61,8 +67,14 @@
 
     <div id="task-modal" class="modal-overlay">
         <div class="modal-box">
-            <h3>Criar Nova Tarefa</h3>
-            <input type="text" id="input-task" placeholder="Ex: Estudar Engenharia de Software..." onkeypress="handleEnter(event)">
+            <h3>Nova Tarefa</h3>
+            <div class="modal-body">
+                <label>Descrição</label>
+                <input type="text" id="input-task" placeholder="O que precisa ser feito?" onkeypress="handleEnter(event)">
+                
+                <label>Prazo (Data e Hora)</label>
+                <input type="datetime-local" id="input-datetime">
+            </div>
             <div class="modal-actions">
                 <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
                 <button class="btn-main" onclick="createNewTask()">Adicionar</button>
