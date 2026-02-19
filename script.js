@@ -5,7 +5,7 @@ const sound = document.getElementById('success-sound');
 function openModal() { modal.style.display = 'grid'; input.focus(); }
 function closeModal() { modal.style.display = 'none'; input.value = ''; }
 
-// Função para enviar com Enter
+// Suporte ao Enter
 function handleEnter(event) {
     if (event.key === 'Enter') {
         createNewTask();
@@ -23,7 +23,7 @@ function drop(ev) {
     
     dropzone.appendChild(document.getElementById(data));
     
-    // Tocar som se cair na coluna "Feito"
+    // Som se for movido para a última coluna
     if (targetColumn.id === 'done') {
         sound.currentTime = 0;
         sound.play();
