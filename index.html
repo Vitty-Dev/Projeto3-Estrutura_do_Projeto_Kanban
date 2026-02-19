@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vitty Dev | Kanban & Time Pro</title>
+    <title>Vitty | Dev - Kanban Advanced</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -15,7 +15,7 @@
         <section class="intro">
             <h1>Gestão Ágil<span> | Kanban</span></h1>
             
-            <div class="timer-box">
+            <div class="timer-section">
                 <div id="timer-display">00:00:00:00</div>
                 <div class="timer-inputs">
                     <input type="number" id="t-days" placeholder="Dias">
@@ -23,71 +23,57 @@
                     <input type="number" id="t-mins" placeholder="Min">
                     <input type="number" id="t-secs" placeholder="Seg">
                 </div>
-                <div class="timer-actions">
-                    <button id="btn-start" onclick="startTimer()"><i class="fas fa-play"></i> Iniciar</button>
-                    <button id="btn-pause" onclick="togglePause()"><i class="fas fa-pause"></i> Pausar</button>
-                    <button onclick="resetTimer()"><i class="fas fa-undo"></i> Resetar</button>
+                <div class="timer-controls">
+                    <button class="btn-timer start" onclick="startTimer()"><i class="fas fa-play"></i> Iniciar</button>
+                    <button class="btn-timer pause" id="btn-pause" onclick="togglePause()"><i class="fas fa-pause"></i> Pausar</button>
+                    <button class="btn-timer reset" onclick="resetTimer()"><i class="fas fa-undo"></i> Resetar</button>
                 </div>
             </div>
 
             <div class="dashboard">
-                <div class="chart-wrapper">
+                <div class="chart-box">
                     <canvas id="taskChart"></canvas>
-                    <div id="percentage-center">0%</div>
+                    <div id="percentage-label">0%</div>
                 </div>
+                <button class="btn-main" onclick="openModal()">
+                    <i class="fas fa-plus"></i> Adicionar Tarefa
+                </button>
             </div>
-
-            <button class="btn-main" onclick="openModal()">
-                <i class="fas fa-plus"></i> Nova Tarefa
-            </button>
         </section>
 
-        <main class="kanban-board">
-            <section class="column" id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <div class="col-head">
-                    <span class="dot yellow"></span>
-                    <h3>A Fazer</h3>
-                    <span class="count" id="todo-count">0</span>
-                </div>
+        <main class="board">
+            <div class="column" id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="col-header"><span class="dot yellow"></span> A Fazer <span class="count" id="todo-count">0</span></div>
                 <div class="dropzone" id="todo-list"></div>
-            </section>
-
-            <section class="column" id="doing" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <div class="col-head">
-                    <span class="dot blue"></span>
-                    <h3>Fazendo</h3>
-                    <span class="count" id="doing-count">0</span>
-                </div>
+            </div>
+            <div class="column" id="doing" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="col-header"><span class="dot blue"></span> Fazendo <span class="count" id="doing-count">0</span></div>
                 <div class="dropzone" id="doing-list"></div>
-            </section>
-
-            <section class="column" id="done" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <div class="col-head">
-                    <span class="dot green"></span>
-                    <h3>Feito</h3>
-                    <span class="count" id="done-count">0</span>
-                </div>
+            </div>
+            <div class="column" id="done" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="col-header"><span class="dot green"></span> Feito <span class="count" id="done-count">0</span></div>
                 <div class="dropzone" id="done-list"></div>
-            </section>
+            </div>
         </main>
 
         <footer class="footer">
             <p>Desenvolvido por <strong>Vitty | Dev</strong></p>
-            <div class="footer-info">
-                <span class="email-text">vitoria.eduardasdo@gmail.com</span>
+            <div class="footer-contact">
+                <span class="email-tag">vitoria.eduardasdo@gmail.com</span>
                 <a href="https://github.com/Vitty-Dev" target="_blank"><i class="fab fa-github"></i> GitHub</a>
             </div>
         </footer>
     </div>
 
     <div id="modal" class="modal-overlay">
-        <div class="modal-content">
+        <div class="modal-box">
             <h3>Nova Tarefa</h3>
-            <input type="text" id="task-desc" placeholder="O que precisa ser feito?" onkeypress="handleEnter(event)">
-            <input type="datetime-local" id="task-time" class="clean-datetime">
+            <input type="text" id="task-desc" placeholder="O que você vai fazer?" onkeypress="handleEnter(event)">
+            <label style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 5px; display: block;">Prazo e Horário</label>
+            <input type="datetime-local" id="task-time" class="datetime-input">
             <div class="modal-btns">
-                <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-                <button class="btn-main" onclick="addTask()">Adicionar</button>
+                <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+                <button class="btn-main" onclick="addTask()">Salvar Tarefa</button>
             </div>
         </div>
     </div>
