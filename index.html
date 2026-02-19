@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vitty Dev | Kanban Board</title>
+    <title>Vitty Dev | Kanban Ágil</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
     <link rel="stylesheet" href="style.css">
@@ -11,12 +11,13 @@
 <body>
 
     <div class="app-container">
-        <header class="header">
+        <section class="intro">
             <h1>Gestão Ágil<span> | Kanban</span></h1>
+            <p>Otimize seu fluxo de trabalho visualizando o progresso das suas tarefas em tempo real. Utilize o método <strong>Kanban</strong> para evitar sobrecarga e focar no que realmente importa.</p>
             <button class="btn-main" onclick="openModal()">
                 <i class="fas fa-plus"></i> Nova Tarefa
             </button>
-        </header>
+        </section>
 
         <main class="kanban-board">
             <section class="kanban-column" id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
@@ -46,19 +47,30 @@
                 <div class="task-zone" id="done-list"></div>
             </section>
         </main>
+
+        <footer class="kanban-footer">
+            <div class="contact-info">
+                <p>Desenvolvido por <strong>Vitty Félix</strong></p>
+                <div class="social-links">
+                    <a href="mailto:vitoria.eduardasdo@gmail.com"><i class="fas fa-envelope"></i> E-mail</a>
+                    <a href="https://github.com/Vitty-Dev" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <div id="task-modal" class="modal-overlay">
         <div class="modal-box">
             <h3>Criar Nova Tarefa</h3>
-            <p>Defina o que precisa ser executado.</p>
-            <input type="text" id="input-task" placeholder="Ex: Estudar Métodos Ágeis...">
+            <input type="text" id="input-task" placeholder="Ex: Estudar Engenharia de Software..." onkeypress="handleEnter(event)">
             <div class="modal-actions">
                 <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
                 <button class="btn-main" onclick="createNewTask()">Adicionar</button>
             </div>
         </div>
     </div>
+
+    <audio id="success-sound" src="https://www.soundjay.com/buttons/sounds/button-37.mp3" preload="auto"></audio>
 
     <script src="script.js"></script>
 </body>
