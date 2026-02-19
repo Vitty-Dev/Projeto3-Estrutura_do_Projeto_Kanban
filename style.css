@@ -28,6 +28,7 @@ body {
 .kanban-board { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
 .kanban-column { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 20px; min-height: 500px; }
 .column-title { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+
 .status-dot { width: 10px; height: 10px; border-radius: 50%; }
 .todo-dot { background: #fbbf24; }
 .doing-dot { background: #38bdf8; }
@@ -36,20 +37,47 @@ body {
 
 /* CARDS */
 .task-zone { min-height: 400px; }
-.task-card { background: var(--surface); padding: 20px; border-radius: 12px; margin-bottom: 15px; cursor: grab; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; }
+.task-card { 
+    background: var(--surface); 
+    padding: 20px; 
+    border-radius: 12px; 
+    margin-bottom: 15px; 
+    cursor: grab; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    transition: 0.3s; 
+}
 .task-card:hover { border-color: var(--primary); background: #2d3a4f; }
 .delete-icon { color: #ef4444; cursor: pointer; opacity: 0.6; transition: 0.3s; }
 .delete-icon:hover { opacity: 1; transform: scale(1.2); }
 
 /* FOOTER */
-.kanban-footer { margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
-.social-links { margin-top: 15px; display: flex; justify-content: center; gap: 20px; }
-.social-links a { color: var(--primary); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
-.social-links a:hover { text-decoration: underline; }
+.kanban-footer { 
+    margin-top: 50px; 
+    padding-top: 30px; 
+    border-top: 1px solid rgba(255,255,255,0.05); 
+    text-align: center; 
+}
+.social-links { 
+    margin-top: 15px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    gap: 25px; 
+}
+.social-links span {
+    font-family: monospace;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 5px 12px;
+    border-radius: 6px;
+    color: var(--text-dim);
+}
+.social-links a { color: var(--primary); text-decoration: none; font-weight: 600; }
 
-/* BOTÕES E MODAL */
-.btn-main { background: var(--primary); color: var(--bg); border: none; padding: 12px 24px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+/* MODAL */
+.btn-main { background: var(--primary); color: var(--bg); border: none; padding: 12px 24px; border-radius: 10px; font-weight: 700; cursor: pointer; }
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); place-items: center; z-index: 1000; }
 .modal-box { background: var(--surface); padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; }
 .modal-box input { width: 100%; padding: 12px; margin: 20px 0; border-radius: 8px; background: var(--bg); border: 1px solid #334155; color: white; outline: none; }
-.modal-box input:focus { border-color: var(--primary); }
