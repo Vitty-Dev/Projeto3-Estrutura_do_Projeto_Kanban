@@ -1,4 +1,4 @@
-# 🚀 Kanban Advanced | Vitty Dev
+# Kanban Advanced | Vitty Dev
 
 Uma ferramenta de produtividade robusta e moderna desenvolvida com foco nos princípios de **Engenharia de Software** e **Metodologias Ágeis**. Este sistema combina a visualização clássica do quadro Kanban com métricas de desempenho em tempo real e gestão de tempo avançada.
 
