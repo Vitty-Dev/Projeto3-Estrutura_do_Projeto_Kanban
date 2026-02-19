@@ -16,8 +16,10 @@
             <h1>Gestão Ágil<span> | Kanban</span></h1>
             <p>Monitore sua produtividade com métricas em tempo real e organização temporal das tarefas.</p>
             
-            <div class="chart-container">
-                <canvas id="taskChart"></canvas>
+            <div class="dashboard-area">
+                <div class="chart-container">
+                    <canvas id="taskChart"></canvas>
+                </div>
             </div>
 
             <button class="btn-main" onclick="openModal()">
@@ -58,8 +60,10 @@
             <div class="contact-info">
                 <p>Desenvolvido por <strong>Vitty | Dev</strong></p>
                 <div class="social-links">
-                    <span>vitoria.eduardasdo@gmail.com</span>
-                    <a href="https://github.com/Vitty-Dev" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                    <span class="email-display">vitoria.eduardasdo@gmail.com</span>
+                    <a href="https://github.com/Vitty-Dev" target="_blank" class="github-link">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
                 </div>
             </div>
         </footer>
@@ -69,11 +73,15 @@
         <div class="modal-box">
             <h3>Nova Tarefa</h3>
             <div class="modal-body">
-                <label>Descrição</label>
-                <input type="text" id="input-task" placeholder="O que precisa ser feito?" onkeypress="handleEnter(event)">
+                <div class="input-group">
+                    <label>O que precisa ser feito?</label>
+                    <input type="text" id="input-task" placeholder="Ex: Finalizar documentação..." onkeypress="handleEnter(event)">
+                </div>
                 
-                <label>Prazo (Data e Hora)</label>
-                <input type="datetime-local" id="input-datetime">
+                <div class="input-group">
+                    <label>Prazo de entrega</label>
+                    <input type="datetime-local" id="input-datetime">
+                </div>
             </div>
             <div class="modal-actions">
                 <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
