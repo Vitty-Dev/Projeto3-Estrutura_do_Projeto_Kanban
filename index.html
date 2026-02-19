@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vitty Dev | Kanban & Time</title>
+    <title>Vitty Dev | Kanban Advanced</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -15,92 +15,88 @@
         <section class="intro">
             <h1>Gestão Ágil<span> | Kanban</span></h1>
             
-            <div class="timer-section">
+            <div class="timer-card">
                 <div id="timer-display">00:00:00:00</div>
+                <div class="timer-inputs">
+                    <input type="number" id="t-days" placeholder="Dias" min="0">
+                    <input type="number" id="t-hours" placeholder="Hrs" min="0">
+                    <input type="number" id="t-mins" placeholder="Min" min="0">
+                    <input type="number" id="t-secs" placeholder="Seg" min="0">
+                </div>
                 <div class="timer-controls">
-                    <button onclick="startTimer()" id="start-btn">Iniciar</button>
-                    <button onclick="pauseTimer()">Pausar</button>
-                    <button onclick="resetTimer()">Resetar</button>
-                </div>
-                <div class="timer-input-group">
-                    <input type="number" id="timer-days" placeholder="Dias" min="0">
-                    <input type="number" id="timer-hours" placeholder="Hrs" min="0">
-                    <input type="number" id="timer-mins" placeholder="Min" min="0">
+                    <button class="btn-timer start" onclick="startTimer()"><i class="fas fa-play"></i> Iniciar</button>
+                    <button class="btn-timer pause" onclick="pauseTimer()"><i class="fas fa-pause"></i> Pausar</button>
+                    <button class="btn-timer reset" onclick="resetTimer()"><i class="fas fa-undo"></i> Resetar</button>
                 </div>
             </div>
 
-            <div class="dashboard-area">
-                <div class="chart-container">
+            <div class="dashboard">
+                <div class="chart-box">
                     <canvas id="taskChart"></canvas>
-                    <div id="chart-percentage">0%</div>
+                    <div id="percentage-label">0%</div>
                 </div>
+                <button class="btn-main" onclick="openModal()">
+                    <i class="fas fa-plus"></i> Adicionar Tarefa
+                </button>
             </div>
-
-            <button class="btn-main" onclick="openModal()">
-                <i class="fas fa-plus"></i> Nova Tarefa
-            </button>
         </section>
 
-        <main class="kanban-board">
-            <section class="kanban-column" id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <div class="column-title">
-                    <span class="status-dot todo-dot"></span>
+        <main class="board">
+            <section class="column" id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="col-header">
+                    <span class="dot yellow"></span>
                     <h3>A Fazer</h3>
-                    <span class="task-count" id="todo-count">0</span>
+                    <span class="count" id="todo-count">0</span>
                 </div>
-                <div class="task-zone" id="todo-list"></div>
+                <div class="dropzone" id="todo-list"></div>
             </section>
 
-            <section class="kanban-column" id="doing" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <div class="column-title">
-                    <span class="status-dot doing-dot"></span>
+            <section class="column" id="doing" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="col-header">
+                    <span class="dot blue"></span>
                     <h3>Fazendo</h3>
-                    <span class="task-count" id="doing-count">0</span>
+                    <span class="count" id="doing-count">0</span>
                 </div>
-                <div class="task-zone" id="doing-list"></div>
+                <div class="dropzone" id="doing-list"></div>
             </section>
 
-            <section class="kanban-column" id="done" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <div class="column-title">
-                    <span class="status-dot done-dot"></span>
+            <section class="column" id="done" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="col-header">
+                    <span class="dot green"></span>
                     <h3>Feito</h3>
-                    <span class="task-count" id="done-count">0</span>
+                    <span class="count" id="done-count">0</span>
                 </div>
-                <div class="task-zone" id="done-list"></div>
+                <div class="dropzone" id="done-list"></div>
             </section>
         </main>
 
-        <footer class="kanban-footer">
-            <div class="contact-info">
-                <p>Desenvolvido por <strong>Vitty | Dev</strong></p>
-                <div class="social-links">
-                    <span class="email-display">vitoria.eduardasdo@gmail.com</span>
-                    <a href="https://github.com/Vitty-Dev" target="_blank" class="github-link">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                </div>
+        <footer class="footer">
+            <p>Desenvolvido por <strong>Vitty | Dev</strong></p>
+            <div class="footer-contact">
+                <span class="email-tag">vitoria.eduardasdo@gmail.com</span>
+                <a href="https://github.com/Vitty-Dev" target="_blank"><i class="fab fa-github"></i> GitHub</a>
             </div>
         </footer>
     </div>
 
-    <div id="task-modal" class="modal-overlay">
+    <div id="modal" class="modal-overlay">
         <div class="modal-box">
             <h3>Nova Tarefa</h3>
             <div class="modal-body">
-                <label>Descrição</label>
-                <input type="text" id="input-task" placeholder="O que fazer?" onkeypress="handleEnter(event)">
+                <label>Descrição da Tarefa</label>
+                <input type="text" id="task-desc" placeholder="O que você vai fazer?" onkeypress="handleEnter(event)">
                 
-                <label>Prazo de entrega</label>
-                <input type="datetime-local" id="input-datetime" class="light-date">
+                <label>Prazo e Horário</label>
+                <input type="datetime-local" id="task-time" class="datetime-input">
             </div>
-            <div class="modal-actions">
-                <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
-                <button class="btn-main" onclick="createNewTask()">Adicionar</button>
+            <div class="modal-btns">
+                <button class="btn-secondary" onclick="closeModal()">Voltar</button>
+                <button class="btn-main" onclick="addTask()">Salvar Tarefa</button>
             </div>
         </div>
     </div>
 
-    <audio id="success-sound" src="https://www.soundjay.com/buttons/sounds/button-37.mp3"></audio>
+    <audio id="done-sound" src="https://www.soundjay.com/buttons/sounds/button-37.mp3"></audio>
     <audio id="alarm-sound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
 
     <script src="script.js"></script>
