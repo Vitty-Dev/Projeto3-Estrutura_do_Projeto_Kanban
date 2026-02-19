@@ -1,11 +1,9 @@
-// Abrir/Fechar Modal
-const modal = document.getElementById('modal');
-const input = document.getElementById('task-text');
+const modal = document.getElementById('task-modal');
+const input = document.getElementById('input-task');
 
 function openModal() { modal.style.display = 'grid'; input.focus(); }
 function closeModal() { modal.style.display = 'none'; input.value = ''; }
 
-// Arrastar e Soltar
 function allowDrop(ev) { ev.preventDefault(); }
 
 function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
@@ -13,13 +11,12 @@ function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
 function drop(ev) {
     ev.preventDefault();
     const data = ev.dataTransfer.getData("text");
-    const dropzone = ev.target.closest('.column').querySelector('.tasks-container');
+    const dropzone = ev.target.closest('.kanban-column').querySelector('.task-zone');
     dropzone.appendChild(document.getElementById(data));
-    updateCounters();
+    updateCounts();
 }
 
-// Criar Tarefa
-function addTask() {
+function createNewTask() {
     if (input.value.trim() === "") return;
 
     const id = 'task-' + Date.now();
@@ -31,28 +28,20 @@ function addTask() {
 
     task.innerHTML = `
         <p>${input.value}</p>
-        <button class="btn-delete" onclick="deleteTask('${id}')">
-            <i class="fas fa-trash"></i>
-        </button>
+        <i class="fas fa-trash delete-icon" onclick="removeTask('${id}')"></i>
     `;
 
     document.getElementById('todo-list').appendChild(task);
     closeModal();
-    updateCounters();
+    updateCounts();
 }
 
-// Excluir Tarefa
-function deleteTask(id) {
-    const task = document.getElementById(id);
-    task.style.opacity = '0';
-    setTimeout(() => {
-        task.remove();
-        updateCounters();
-    }, 200);
+function removeTask(id) {
+    document.getElementById(id).remove();
+    updateCounts();
 }
 
-// Atualizar Contadores
-function updateCounters() {
+function updateCounts() {
     document.getElementById('todo-count').innerText = document.getElementById('todo-list').children.length;
     document.getElementById('doing-count').innerText = document.getElementById('doing-list').children.length;
     document.getElementById('done-count').innerText = document.getElementById('done-list').children.length;
