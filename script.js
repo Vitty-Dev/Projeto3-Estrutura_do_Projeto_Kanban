@@ -1,16 +1,33 @@
 const modal = document.getElementById('task-modal');
-const input = document.getElementById('input-task');
+const inputTask = document.getElementById('input-task');
+const inputDate = document.getElementById('input-datetime');
 const sound = document.getElementById('success-sound');
 
-function openModal() { modal.style.display = 'grid'; input.focus(); }
-function closeModal() { modal.style.display = 'none'; input.value = ''; }
-
-// Suporte ao Enter
-function handleEnter(event) {
-    if (event.key === 'Enter') {
-        createNewTask();
+// CONFIGURAÇÃO DO GRÁFICO
+const ctx = document.getElementById('taskChart').getContext('2d');
+let taskChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['A Fazer', 'Fazendo', 'Feito'],
+        datasets: [{
+            data: [0, 0, 0],
+            backgroundColor: ['#fbbf24', '#38bdf8', '#22c55e'],
+            borderWidth: 0,
+            hoverOffset: 10
+        }]
+    },
+    options: {
+        cutout: '80%',
+        plugins: { legend: { display: false } },
+        responsive: true,
+        maintainAspectRatio: false
     }
-}
+});
+
+function openModal() { modal.style.display = 'grid'; inputTask.focus(); }
+function closeModal() { modal.style.display = 'none'; inputTask.value = ''; inputDate.value = ''; }
+
+function handleEnter(event) { if (event.key === 'Enter') createNewTask(); }
 
 function allowDrop(ev) { ev.preventDefault(); }
 function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
@@ -23,19 +40,21 @@ function drop(ev) {
     
     dropzone.appendChild(document.getElementById(data));
     
-    // Som se for movido para a última coluna
     if (targetColumn.id === 'done') {
         sound.currentTime = 0;
         sound.play();
     }
-    
     updateCounts();
 }
 
 function createNewTask() {
-    if (input.value.trim() === "") return;
+    if (inputTask.value.trim() === "") return;
 
     const id = 'task-' + Date.now();
+    const dateValue = inputDate.value 
+        ? new Date(inputDate.value).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) 
+        : 'Sem prazo definido';
+    
     const task = document.createElement('div');
     task.className = 'task-card';
     task.id = id;
@@ -43,8 +62,13 @@ function createNewTask() {
     task.ondragstart = drag;
 
     task.innerHTML = `
-        <p>${input.value}</p>
-        <i class="fas fa-trash delete-icon" onclick="removeTask('${id}')"></i>
+        <div class="task-header">
+            <p>${inputTask.value}</p>
+            <i class="fas fa-trash delete-icon" onclick="removeTask('${id}')"></i>
+        </div>
+        <div class="task-date">
+            <i class="far fa-calendar-alt"></i> ${dateValue}
+        </div>
     `;
 
     document.getElementById('todo-list').appendChild(task);
@@ -58,7 +82,15 @@ function removeTask(id) {
 }
 
 function updateCounts() {
-    document.getElementById('todo-count').innerText = document.getElementById('todo-list').children.length;
-    document.getElementById('doing-count').innerText = document.getElementById('doing-list').children.length;
-    document.getElementById('done-count').innerText = document.getElementById('done-list').children.length;
+    const todo = document.getElementById('todo-list').children.length;
+    const doing = document.getElementById('doing-list').children.length;
+    const done = document.getElementById('done-list').children.length;
+
+    document.getElementById('todo-count').innerText = todo;
+    document.getElementById('doing-count').innerText = doing;
+    document.getElementById('done-count').innerText = done;
+
+    // Atualiza o gráfico Chart.js
+    taskChart.data.datasets[0].data = [todo, doing, done];
+    taskChart.update();
 }
